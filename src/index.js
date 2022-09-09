@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { api as axiosApi } from './config/axios/api';
 import { services as Api } from './services/services';
-import rootReducer from './config/store/reducer/rootReducer';
+// import rootReducer from './config/store/reducer/rootReducer';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { BrowserRouter } from "react-router-dom";

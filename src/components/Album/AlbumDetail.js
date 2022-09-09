@@ -6,7 +6,7 @@ import { services } from "../..";
 import dayjs from "dayjs";
 import { connect } from "react-redux";
 
-const AlbumDetail = ({ global }) => {
+const AlbumDetail = ({  }) => {
   const navigateTo = useNavigate();
   const { id } = useParams();
   const [currentAudio, setCurrentAudio] = useState(new Audio());
@@ -100,9 +100,4 @@ const AlbumDetail = ({ global }) => {
   )
 };
 
-
-const mapStateToProps = (state) => {
-  return { global: state.global }
-}
-
-export default connect(mapStateToProps)(AlbumDetail);
+export default AlbumDetail;

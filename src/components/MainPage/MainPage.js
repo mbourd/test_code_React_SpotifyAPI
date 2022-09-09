@@ -131,8 +131,4 @@ const MainPage = ({  }) => {
   )
 };
 
-const mapStateToProps = (state) => {
-  return { global: state.global }
-}
-
-export default connect(mapStateToProps)(MainPage);
+export default (MainPage);
