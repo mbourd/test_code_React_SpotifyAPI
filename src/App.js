@@ -4,7 +4,7 @@ import { Container, Row } from "react-bootstrap";
 import PublicRoutes from './config/route/PublicRoutes';
 import logo from './spotify-logo.jpg';
 
-const App = ({ props1 }) => {
+const App = ({  }) => {
   return (
     <div className="App">
       <header>
@@ -26,8 +26,4 @@ const App = ({ props1 }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { props1: "exemple value" }
-};
-
-export default connect(mapStateToProps)(App);
+export default App;
