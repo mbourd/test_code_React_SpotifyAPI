@@ -2,7 +2,7 @@ import { Col, Row, Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { services } from "../..";
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { ContextMainPage } from "../MainPage/MainPage";
 
 const SearchEngine = ({ }) => {
@@ -10,7 +10,7 @@ const SearchEngine = ({ }) => {
   const [searchKeyword, setSearchKeyword] = useState("lyric"); // le mot clé a rechercher
 
   // Méthode pour récuprer les playlists
-  const getPlaylists = () => {
+  const getPlaylists = useCallback(() => {
     services.spotify
       .getMyPlaylists()
       .then((response) => {
@@ -21,10 +21,10 @@ const SearchEngine = ({ }) => {
         contextMainPageValue.setlistItems(response.data.items);
       })
       .catch((error) => { console.log(error) });
-  }
+  }, [contextMainPageValue]);
 
   // Méthode pour récuprer une liste d'album en fonction du mot clé saisie
-  const searchAlbum = () => {
+  const searchAlbum = useCallback(() => {
     services.spotify
       .searchAlbum(searchKeyword)
       .then((response) => {
@@ -35,7 +35,7 @@ const SearchEngine = ({ }) => {
         contextMainPageValue.setlistItems(response.data.albums.items);
       })
       .catch((error) => { console.log(error) });
-  }
+  }, [contextMainPageValue, searchKeyword]);
 
   return (
     <>

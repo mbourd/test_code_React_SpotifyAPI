@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { services } from "../..";
 import { ContextMainPage } from "../MainPage/MainPage";
@@ -6,15 +6,8 @@ import { ContextMainPage } from "../MainPage/MainPage";
 const Pagination = ({ }) => {
   const contextMainPageValue = useContext(ContextMainPage);
 
-  useEffect(() => {
-    // Reupdate les items a afficher quand le numéro de la page est modifié
-    try {
-      paginate(null, contextMainPageValue.currentPage);
-    } catch (error) { }
-  }, [contextMainPageValue.listItems, contextMainPageValue.currentPage]);
-
   // Méthode pour paginer précèdent ou suivant, ou directement sur la page choisie
-  const paginate = (action = "next", pageNumber = 0) => {
+  const paginate = useCallback((action = "next", pageNumber = 0) => {
     let increment = 0;
 
     if (action)
@@ -24,10 +17,10 @@ const Pagination = ({ }) => {
 
     contextMainPageValue.setCurrentPage(pageNumber);
     contextMainPageValue.setItems(contextMainPageValue.listItems.slice((pageNumber - 1) * contextMainPageValue.paginationSize, pageNumber * contextMainPageValue.paginationSize));
-  }
+  }, [contextMainPageValue]);
 
   // Méthode pour récuprer la liste suivante (pour albums seulement)
-  const getNextResultsAlbums = () => {
+  const getNextResultsAlbums = useCallback(() => {
     try {
       let next = new URL(contextMainPageValue.data.albums.next);
       let searchParams = new URLSearchParams(next.search);
@@ -44,7 +37,14 @@ const Pagination = ({ }) => {
           contextMainPageValue.setlistItems([...contextMainPageValue.listItems, ...response.data.albums.items]);
         });
     } catch (error) { }
-  }
+  }, [contextMainPageValue]);
+
+  useEffect(() => {
+    // Reupdate les items a afficher quand le numéro de la page est modifié
+    try {
+      paginate(null, contextMainPageValue.currentPage);
+    } catch (error) { }
+  }, [contextMainPageValue.listItems, contextMainPageValue.currentPage, paginate]);
 
   return (
     <>
@@ -59,7 +59,7 @@ const Pagination = ({ }) => {
           return <Button
             key={i + 1}
             id={"buttonPagination" + (i + 1)}
-            className={"buttonPagination " + (contextMainPageValue.currentPage - 1 == i ? "btn-success" : "")}
+            className={"buttonPagination " + (contextMainPageValue.currentPage - 1 === i ? "btn-success" : "")}
             variant="outline-secondary"
             onClick={(e) => { paginate(null, i + 1); }}
           >{(i + 1) + " "}</Button>

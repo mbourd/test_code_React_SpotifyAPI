@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { Card, Row, Col, Button, ListGroup } from "react-bootstrap";
-import { useMatch, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { services } from "../..";
 import dayjs from "dayjs";
-import { connect } from "react-redux";
 
-const AlbumDetail = ({  }) => {
+const AlbumDetail = () => {
   const navigateTo = useNavigate();
   const { id } = useParams();
   const [currentAudio, setCurrentAudio] = useState(new Audio());

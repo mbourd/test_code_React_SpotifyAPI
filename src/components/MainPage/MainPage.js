@@ -5,15 +5,14 @@ import Pagination from "../Pagination/Pagination";
 import SearchEngine from "../Forms/SearchEngine";
 import Playlist from "../Playlists/Playlists";
 import Album from "../Album/Album";
-import { connect, useDispatch, useSelector } from 'react-redux';
-import qs from "qs"
+import { useDispatch, useSelector } from 'react-redux';
 import { environnement } from '../../config/environnement/environnement';
 
 import { updateAlbums } from "../../config/store/reducer/albumsSlice"
 
 export const ContextMainPage = createContext();
 
-const MainPage = ({  }) => {
+const MainPage = () => {
   const global = useSelector(({albums}) => albums);
   const dispatch = useDispatch();
 
@@ -88,7 +87,7 @@ const MainPage = ({  }) => {
     //     data,
     //   }
     // })
-  }, [items, listItems, display, currentPage, data])
+  }, [items, listItems, display, currentPage, data, dispatch])
 
   return (
     <ContextMainPage.Provider value={{items, setItems, listItems, setlistItems, data, setData, currentPage, setCurrentPage, paginationSize, display, setDisplay}}>
@@ -107,15 +106,11 @@ const MainPage = ({  }) => {
               {items.map((item, index) => {
                 switch (display) {
                   case "playlists":
-                    return <Col key={index}><Playlist playlist={item} /></Col>
-                    break;
+                    return <Col key={index}><Playlist playlist={item} /></Col>;
                   case "albums":
-                    return <Col key={index}><Album album={item} /></Col>
-                    break;
-
+                    return <Col key={index}><Album album={item} /></Col>;
                   default:
-                    return <></>
-                    break;
+                    return <></>;
                 }
               })}
             </Row>
